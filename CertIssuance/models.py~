@@ -1,0 +1,56 @@
+from __future__ import unicode_literals
+
+from abc import ABCMeta, abstractmethod
+from django.db import models
+
+class CertificateAuthority(models.Model):
+
+	ip_address = models.GenericIPAddressField(protocol='IPv4', unpack_ipv4=False)
+	port = models.SmallIntegerField()
+	name = models.CharField(max_length=50)
+
+	class Meta:
+	   abstract = True
+
+	@abstractmethod
+	def submit_csr(self):
+	   pass
+
+class DefaultCertificateAuthority(CertificateAuthority):
+	#return a certificate
+	def submit_csr(self):
+	   return "test"
+
+
+
+class User(models.Model):
+	username = models.CharField(max_length=100)
+
+	def is_elligible(self):
+	   return false
+
+class IssuedCertificate(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	def revoke(self):
+	   return true
+   
+class BaseRequest(models.Model):
+	pass
+
+class CertificateRequest(BaseRequest):
+	pass
+
+class Enrollment(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	
+	def is_complete():
+		pass
+
+class RevocationRequest(BaseRequest):
+	pass
+
+class CertificateAuthorityServerRequest(models.Model):
+	pass
+
+class CertificateAuthorityServerResponse(models.Model):
+	pass
